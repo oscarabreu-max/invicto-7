@@ -1,0 +1,9 @@
+name = "invicto7-buzon"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "invicto7-buzon"
+database_id = "b4f7a0c0-7ceb-479d-9e9d-d52d0f6a2d84"

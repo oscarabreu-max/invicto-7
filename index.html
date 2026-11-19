@@ -245,6 +245,15 @@
   /* Reto, copa y explicacion */
   .reto { background: var(--panel2); border: 1px solid var(--acento); border-radius: 14px; padding: 12px 14px; margin: 14px 0; text-align: center; font-size: 14px; line-height: 1.4; }
   .reto b { color: var(--acento); }
+  .buzon { background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 12px 14px; margin: 14px 0; font-size: 14px; line-height: 1.4; }
+  .buzon summary { cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+  .buzon summary::-webkit-details-marker { display: none; }
+  .buzon summary::after { content: '▾'; color: var(--tenue); margin-left: 8px; }
+  .buzon[open] summary::after { content: '▴'; }
+  .buzon .punto { margin-left: auto; background: var(--acento); color: var(--acento-ink); font-size: 11px; font-weight: 800; border-radius: 99px; padding: 2px 8px; }
+  .carta-b { display: flex; gap: 10px; align-items: center; padding: 10px 0 0; margin-top: 10px; border-top: 1px solid var(--linea); }
+  .carta-b.nuevo b { color: var(--acento); }
+  .carta-b .pxm.grande { width: 60px; height: 56px; margin: 0; flex: none; }
   .reto .btn { margin: 10px 0 0 !important; }
   .copa { background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 12px 14px; margin: 14px 0; text-align: left; }
   .copa h3 { margin: 0 0 2px; font-size: 16px; }
@@ -273,6 +282,7 @@
     <p class="tenue">Arma un siete histórico de fut 7, con jugadores de 1980 a hoy, y descubre si gana los 38 partidos.</p>
     <button class="chip" id="chip"></button>
     <div class="reto hidden" id="retoInicio"></div>
+    <details class="buzon hidden" id="buzon"></details>
     <div class="modo" id="modo">
       <button data-modo="clasico" class="on">Clásico</button>
       <button data-modo="ciegas">A ciegas</button>
@@ -320,6 +330,7 @@
     <div class="cancha" id="canchaFinal"></div>
     <input id="nombre" maxlength="18" placeholder="Tu nombre o apodo (opcional)" autocomplete="off">
     <button class="btn" id="compartir">Retar a un amigo</button>
+    <p class="tenue hidden" id="avisoBuzon" style="font-size:12px;text-align:center;margin:8px 0 0">Cuando tu amigo juegue el reto, verás su resultado en tu buzón, en la pantalla de inicio.</p>
     <button class="btn sec" id="otra">Jugar otra vez</button>
     <details>
       <summary>¿Cómo se calcula el récord?</summary>
@@ -363,6 +374,7 @@
 <script src="sonido.js"></script>
 <script src="arte.js"></script>
 <script src="perfil.js"></script>
+<script src="buzon.js"></script>
 <script src="ui.js"></script>
 <script>
 // Instalacion: registra el funcionamiento sin conexion y ofrece instalar.

@@ -25,7 +25,7 @@
       S.lineup.map(function (p) { return p.cid + ':' + p.dec + ':' + p.id; }).join(',')].join('~');
   }
   function leerReto() {
-    var m = /[#&]r=([^&]+)/.exec(location.hash);
+    var m = /[#&]r=([^&]+)/.exec(location.hash), d = /[#&]d=([A-Za-z0-9]{8,16})/.exec(location.hash);
     if (!m) { return null; }
     try {
       var f = m[1].split('~'), liga = LIGAS.filter(function (l) { return l.id === f[0]; })[0];
@@ -35,7 +35,7 @@
         return c.players.filter(function (p) { return p.id === k[2]; })[0];
       });
       if (lineup.length !== SLOTS.length || lineup.some(function (p, i) { return !p || p.pos.indexOf(SLOTS[i]) < 0; })) { return null; }
-      return { liga: liga, modo: f[1] === 'b' ? 'ciegas' : 'clasico', nombre: decodeURIComponent(f[2]).slice(0, 18) || 'Tu amigo', res: M.proyectar(lineup) };
+      return { id: d ? d[1] : null, liga: liga, modo: f[1] === 'b' ? 'ciegas' : 'clasico', nombre: decodeURIComponent(f[2]).slice(0, 18) || 'Tu amigo', res: M.proyectar(lineup) };
     } catch (err) { return null; }
   }
   function marca(r) { return r.g + '-' + r.e + '-' + r.p; }
@@ -223,13 +223,17 @@
       if (S.copa.campeon) { pr.push(['Campeón de la eliminatoria', 150, 1]); }
       if (S.copa.titulos) { pr.push([S.copa.titulos + ' ' + S.trofeo + ' en la vitrina', 2 * S.copa.titulos]); }
     }
-    if (S.reto && (r.g - S.reto.res.g || r.fuerza - S.reto.res.fuerza) > 0) { pr.push(['Le ganaste a ' + S.reto.nombre, 75, 1]); }
+    var dif = S.reto ? (r.g - S.reto.res.g || r.fuerza - S.reto.res.fuerza) : 0;
+    if (dif > 0) { pr.push(['Le ganaste a ' + S.reto.nombre, 75, 1]); }
     $('premio').innerHTML = Perfil.premiar(pr);
+    // El dueno del reto se entera en su buzon, con tu festejo si le ganaste.
+    if (S.reto && S.reto.id) { Buzon.intento(S.reto.id, Perfil.nombre(), marca(r), dif > 0 ? 1 : dif < 0 ? -1 : 0, dif > 0 ? Perfil.codigoFestejo() : ''); }
     Sonido.fx('final'); Sonido.vibra(120);
     Analitica.evento('partida_fin', { liga: S.liga.id, modo: S.modo, victorias: r.g, nivel: r.nivel,
       copa: S.copa ? (S.copa.campeon ? 'campeon' : S.copa.llego) : 'sin copa', con_reto: S.reto ? 1 : 0 });
     $('nombre').value = Perfil.nombre();
     $('compartir').textContent = 'Retar a un amigo';
+    $('avisoBuzon').classList.add('hidden');
     mostrar('final');
   }
 
@@ -283,7 +287,11 @@
     } catch (err) { return null; }
   }
 
-  function enlaceReto() { return location.href.split('#')[0] + '#r=' + codigoReto(); }
+  // Cada siete compartido lleva un id: con el, el servidor sabe a quien avisar.
+  function enlaceReto() {
+    if (!S.idReto) { S.idReto = Buzon.nuevoId(); }
+    return location.href.split('#')[0] + '#r=' + codigoReto() + '&d=' + S.idReto;
+  }
 
   function textoCompartir() {
     var r = S.res;
@@ -321,6 +329,8 @@
   $('compartir').addEventListener('click', function () {
     Perfil.ponNombre($('nombre').value);
     enviar(textoCompartir(), $('compartir'));
+    Buzon.registrar(S.idReto, Perfil.nombre(), S.liga.id, marca(S.res));
+    $('avisoBuzon').classList.remove('hidden');
     Analitica.evento('reto_compartido', { liga: S.liga.id, victorias: S.res.g });
   });
   $('retoFinal').addEventListener('click', function (e) {
@@ -331,8 +341,28 @@
       location.href.split('#')[0] + '#f=' + [encodeURIComponent(Perfil.nombre()), marca(S.res), marca(S.reto.res), Perfil.codigoFestejo()].join('~'), e.target);
   });
 
+  // Buzon: quien jugo los retos que compartiste. Lo nuevo va resaltado y arriba.
+  function pintarBuzon(lista) {
+    var caja = $('buzon'), nuevos = lista.filter(function (x) { return x.nuevo; }).length;
+    caja.classList.toggle('hidden', !lista.length);
+    if (!lista.length) { return; }
+    caja.innerHTML = '<summary><b>Buzón de retos</b>' + (nuevos ? '<span class="punto">' + nuevos + (nuevos === 1 ? ' nuevo' : ' nuevos') + '</span>' : '') + '</summary>' +
+      lista.map(function (x) {
+        var liga = LIGAS.filter(function (l) { return l.id === x.liga; })[0], n = esc(x.nombre);
+        var F = x.gano === 1 && x.festejo ? Perfil.festejoDe(x.festejo) : null;
+        return '<div class="carta-b' + (x.nuevo ? ' nuevo' : '') + '">' + (F ? F.dibujo : '') + '<div>' +
+          (x.gano === 1 ? '<b>' + n + ' te ganó.</b>' : x.gano === 0 ? '<b>' + n + ' te empató.</b>' : '<b>' + n + ' no pudo contigo.</b>') +
+          '<br>Hizo ' + esc(x.marca) + ' contra tu ' + esc(x.tuyo) + (liga ? ' · ' + esc(liga.n) : '') +
+          (F ? '<br><span class="tenue">«' + esc(F.frase) + '»</span>' : '') + '</div></div>';
+      }).join('');
+    caja.open = nuevos > 0;
+    if (nuevos) { Sonido.fx('moneda'); Analitica.evento('buzon_nuevos', { cuantos: nuevos }); }
+    Buzon.visto(lista);
+  }
+
   retoPendiente = leerReto();
   festejo = leerFestejo();
+  Buzon.leer(pintarBuzon);
 
   pintarInicio();
 })();
