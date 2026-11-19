@@ -199,7 +199,6 @@ var Perfil = (function () {
       }).join('') + '</optgroup>';
     }).join('');
     return '<div class="escenario">' + monito('pxm grande') + '</div>' +
-      '<input id="pNombre" maxlength="18" placeholder="Tu nombre o apodo" autocomplete="off" value="' + esc(D.nombre) + '">' +
       '<h4>Piel</h4><div class="fila-op">' + muestras('piel', Arte.PIEL) + '</div>' +
       '<h4>Color de pelo</h4><div class="fila-op">' + muestras('tinte', Arte.TINTE) + '</div>' +
       '<h4>Camiseta</h4><div class="fila-op">' + Object.keys(BASICOS).map(function (k) { return boton('jersey:' + k, k.charAt(0).toUpperCase() + k.slice(1), D.av.jersey === k); }).join('') + '</div>' +
@@ -263,7 +262,27 @@ var Perfil = (function () {
     }).join('');
   }
 
+  // Cabecera del perfil: quien eres, cuanto tienes y para que sirve.
+  function cabeza() {
+    var total = cartas().length, mias = Object.keys(D.cartas).length;
+    var barato = SOBRES.basico, falta = barato.precio - D.monedas;
+    var meta = falta > 0 ? 'Te faltan <b>' + falta + '</b> monedas para tu próximo ' + barato.n + '.'
+      : 'Ya te alcanza para abrir un ' + (alcanza(SOBRES.elite) ? SOBRES.elite.n : alcanza(SOBRES.medio) ? SOBRES.medio.n : barato.n) + '.';
+    return '<div class="quien">' + monito('pxm mini') +
+      '<input id="pNombre" maxlength="18" placeholder="Tu nombre o apodo" autocomplete="off" value="' + esc(D.nombre) + '">' +
+      '<button class="btn" id="pGuardar">Guardar</button></div>' +
+      '<div class="saldo"><div><span class="monedas"><i></i>' + D.monedas + '</span><small>Monedas</small></div>' +
+      '<div><span class="trofeos"><i></i>' + D.trofeos + '</span><small>Trofeos</small></div>' +
+      '<div><span>' + mias + '<em>/' + total + '</em></span><small>Cartas</small></div></div>' +
+      '<ol class="como"><li><b>Juega.</b> Cada partida te da monedas; jugar bien te da trofeos.</li>' +
+      '<li><b>Canjea.</b> Con monedas vistes a tu monito: playeras, peinados, tachos, mascotas y festejos.</li>' +
+      '<li><b>Colecciona.</b> Con monedas y trofeos abres sobres de cartas para llenar tu álbum.</li></ol>' +
+      '<p class="meta">' + meta + '</p>' +
+      '<div class="dos"><button class="btn sec" data-ir="monito">Vestir a mi monito</button><button class="btn" data-ir="sobres">Abrir sobres</button></div>';
+  }
+
   function pintar() {
+    $('pCabeza').innerHTML = cabeza();
     $('pMonedas').innerHTML = '<i></i>' + D.monedas + ' <span class="trofeos"><i></i>' + D.trofeos + '</span>';
     document.querySelectorAll('#pTabs button').forEach(function (b) { b.classList.toggle('on', b.dataset.tab === pestana); });
     $('pAviso').textContent = aviso; aviso = '';
@@ -365,7 +384,25 @@ var Perfil = (function () {
     guardar();
   }
 
-  $('chip').addEventListener('click', function () { recien = null; ver('perfil'); pintar(); });
+  function abrirPerfil(tab) { recien = null; porBorrar = false; if (tab) { pestana = tab; } ver('perfil'); pintar(); }
+  function guardarNombre() {
+    D.nombre = $('pNombre').value.trim().slice(0, 18); guardar(); chip();
+    var b = $('pGuardar'); b.textContent = 'Guardado'; b.disabled = true; Sonido.fx('moneda');
+    setTimeout(function () { b.textContent = 'Guardar'; b.disabled = false; }, 1500);
+  }
+  $('chip').addEventListener('click', function () { abrirPerfil(); });
+  $('pCabeza').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) { return; }
+    if (b.id === 'pGuardar') { guardarNombre(); }
+    else if (b.dataset.ir) { pestana = b.dataset.ir; pintar(); $('pTabs').scrollIntoView({ block: 'start' }); }
+  });
+  $('pCabeza').addEventListener('keydown', function (e) { if (e.target.id === 'pNombre' && e.key === 'Enter') { guardarNombre(); e.target.blur(); } });
+  // Desde la pantalla de resultado: ir directo a gastar lo ganado.
+  $('premio').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-perfil]');
+    if (b) { abrirPerfil(b.dataset.perfil); }
+  });
   $('pVolver').addEventListener('click', function () { chip(); ver('inicio'); });
   $('pTabs').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-tab]');
@@ -400,7 +437,6 @@ var Perfil = (function () {
   });
   $('pCuerpo').addEventListener('change', function (e) {
     if (e.target.dataset && e.target.dataset.vol) { Sonido.fx('moneda'); }
-    if (e.target.id === 'pNombre') { D.nombre = e.target.value.trim().slice(0, 18); guardar(); }
     if (e.target.id === 'pClub') { clubVisto = e.target.value; pintar(); }
   });
 
@@ -411,7 +447,8 @@ var Perfil = (function () {
     guardar();
     return '<h3>Ganaste <span class="monedas"><i></i>' + total + '</span>' + (tro ? ' y <span class="trofeos"><i></i>' + tro + '</span>' : '') + '</h3>' + lista.map(function (x) {
       return '<div class="premio"><span>' + esc(x[0]) + '</span><span>' + (x[1] ? '+' + x[1] : '') + (x[2] ? ' <span class="trofeos"><i></i>' + x[2] + '</span>' : '') + '</span></div>';
-    }).join('') + '<div class="sub tenue" style="margin-top:8px">Tienes ' + D.monedas + ' monedas y ' + D.trofeos + ' trofeos. Úsalos en tu perfil para abrir sobres o vestir a tu monito.</div>';
+    }).join('') + '<div class="sub tenue" style="margin-top:8px">Tienes ' + D.monedas + ' monedas y ' + D.trofeos + ' trofeos. Canjéalos por sobres de cartas o por artículos para tu monito.</div>' +
+      '<div class="dos"><button class="btn sec" data-perfil="monito">Vestir a mi monito</button><button class="btn" data-perfil="sobres">Abrir sobres</button></div>';
   }
 
   chip();
