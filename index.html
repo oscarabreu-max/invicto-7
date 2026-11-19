@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230b1410'/%3E%3Ctext x='8' y='13' font-size='13' font-weight='900' font-style='italic' text-anchor='middle' fill='%23c8f04a' font-family='sans-serif'%3E7%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0b1410">
+<title>Invicto 7 — ¿Tu siete histórico puede ganar los 38?</title>
+<style>
+  :root {
+    --fondo: #0b1410; --panel: #14221b; --panel2: #1c3026; --linea: #2b4638;
+    --texto: #f2efe4; --tenue: #9db3a6; --acento: #c8f04a; --acento-ink: #10200a;
+    --cesped: #1f6b43; --cesped2: #1a5c39; --alerta: #ffb14a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--fondo); color: var(--texto);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { min-height: 100vh; display: flex; justify-content: center; }
+  #app { width: 100%; max-width: 460px; padding: 16px 16px 32px; }
+  h1 { font-size: 34px; letter-spacing: -1px; margin: 0; font-style: italic; font-weight: 900; }
+  h1 span { color: var(--acento); }
+  button { font: inherit; color: inherit; cursor: pointer; border: 0; border-radius: 12px; }
+  button:disabled { opacity: .35; cursor: default; }
+  .btn { background: var(--acento); color: var(--acento-ink); font-weight: 800; padding: 14px 18px; width: 100%; font-size: 16px; }
+  .btn.sec { background: var(--panel2); color: var(--texto); border: 1px solid var(--linea); }
+  .tenue { color: var(--tenue); }
+  .hidden { display: none !important; }
+
+  /* Inicio */
+  #inicio { padding-top: 5vh; text-align: center; }
+  #inicio p { line-height: 1.5; margin: 14px 0 18px; }
+  #inicio .btn { margin-bottom: 12px; }
+  #inicio small { display: block; margin-top: -6px; margin-bottom: 14px; }
+  .pasos { text-align: left; background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 14px 16px 14px 34px; margin: 0 0 24px; line-height: 1.5; font-size: 14px; }
+
+  h2 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--tenue); margin: 22px 0 10px; }
+  .modo { display: inline-flex; background: var(--panel); border: 1px solid var(--linea); border-radius: 999px; padding: 4px; }
+  .modo button { background: none; padding: 8px 18px; border-radius: 999px; font-weight: 700; font-size: 14px; color: var(--tenue); }
+  .modo button.on { background: var(--acento); color: var(--acento-ink); }
+  #modoTxt { margin: 8px 0 0 !important; }
+  .ligas { display: grid; gap: 8px; margin-bottom: 22px; }
+  .ligas button { background: var(--panel); border: 1px solid var(--linea); padding: 14px 16px; text-align: left; display: flex; align-items: center; justify-content: space-between; }
+  .ligas button b { font-size: 17px; }
+  .ligas button span { font-size: 12px; color: var(--tenue); }
+  .jersey { display: block; margin: 0 auto 3px; }
+  .escudo .jersey { width: 54px; height: 49px; margin-bottom: 6px; }
+  .slot .jersey { width: 30px; height: 27px; }
+
+  /* Partida */
+  .top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+  .top h1 { font-size: 22px; }
+  .cancha { background: repeating-linear-gradient(0deg, var(--cesped) 0 34px, var(--cesped2) 34px 68px);
+    border: 2px solid rgba(255,255,255,.35); border-radius: 14px; padding: 12px 8px; display: grid; gap: 8px; }
+  .fila { display: flex; justify-content: center; gap: 8px; }
+  .slot { flex: 1; max-width: 132px; min-height: 48px; border-radius: 10px; padding: 5px 6px; text-align: center;
+    background: rgba(0,0,0,.28); border: 1px dashed rgba(255,255,255,.45); font-size: 12px; }
+  .slot b { display: block; font-size: 10px; letter-spacing: 1px; color: var(--acento); }
+  .slot.lleno { background: rgba(8,20,13,.82); border-style: solid; border-color: var(--acento); }
+  .slot .nom { font-weight: 700; line-height: 1.15; }
+  .slot .de { font-size: 10px; color: var(--tenue); }
+
+  .ruleta { background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 14px; margin: 12px 0; text-align: center; }
+  .ruleta .club { font-size: 26px; font-weight: 900; font-style: italic; line-height: 1.1; }
+  .ruleta .dec { font-size: 18px; color: var(--acento); font-weight: 800; margin-top: 2px; }
+  .ruleta.girando .club, .ruleta.girando .dec { opacity: .55; }
+  .saltos { display: flex; gap: 8px; margin-top: 12px; }
+  .saltos button { flex: 1; background: var(--panel2); border: 1px solid var(--linea); padding: 9px 6px; font-size: 13px; font-weight: 600; }
+
+  .lista { display: grid; gap: 6px; }
+  .jug { background: var(--panel); border: 1px solid var(--linea); border-radius: 12px; padding: 9px 10px; display: flex; align-items: center; gap: 8px; }
+  .jug.no { opacity: .4; }
+  .jug .info { flex: 1; min-width: 0; }
+  .jug .nombre { font-weight: 700; font-size: 15px; }
+  .jug .stats { font-size: 11.5px; color: var(--tenue); margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .jug .stats i { font-style: normal; color: var(--texto); font-weight: 700; }
+  .jug .acc { display: flex; gap: 5px; }
+  .jug .acc button { background: var(--acento); color: var(--acento-ink); font-weight: 800; font-size: 12px; padding: 8px 9px; border-radius: 9px; }
+  .nota { font-size: 12px; margin: 10px 2px; }
+
+  /* Resultado */
+  #final { text-align: center; }
+  .record { font-size: 64px; font-weight: 900; font-style: italic; letter-spacing: -2px; margin: 8px 0 0; font-variant-numeric: tabular-nums; }
+  .ged { font-size: 12px; letter-spacing: 2px; color: var(--tenue); }
+  .nivel { display: inline-block; margin: 12px 0 4px; background: var(--acento); color: var(--acento-ink); font-weight: 900; padding: 6px 14px; border-radius: 999px; }
+  .aviso { color: var(--alerta); font-size: 13px; margin: 8px 0; }
+  .barras { background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 12px 14px; margin: 14px 0; text-align: left; }
+  .barra { display: grid; grid-template-columns: 78px 1fr 30px; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; }
+  .barra .riel { height: 8px; background: var(--panel2); border-radius: 99px; overflow: hidden; }
+  .barra .riel div { height: 100%; background: var(--acento); border-radius: 99px; }
+  .barra.floja .riel div { background: var(--alerta); }
+  .barra span:last-child { text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+  #final .btn { margin-top: 10px; }
+
+  /* Perfil, monito, sobres y cartas */
+  .monedas { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .monedas i { width: 10px; height: 10px; background: #ffd23f; box-shadow: inset -2px -2px 0 #c7930a, 0 0 0 2px #7a5a05; display: inline-block; }
+  .trofeos { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .trofeos i { width: 10px; height: 11px; background: #c8f04a; display: inline-block; clip-path: polygon(0 0, 100% 0, 85% 60%, 62% 72%, 62% 86%, 85% 100%, 15% 100%, 38% 86%, 38% 72%, 15% 60%); }
+  .s-medio .papel { color: #06203a; background: repeating-linear-gradient(135deg, #7cc4ff 0 6px, #4a9be6 6px 12px); box-shadow: inset 0 0 0 3px #06203a, inset 0 0 0 6px #d3ecff; }
+  .ajuste { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--linea); font-size: 15px; }
+  .ajuste input[type=range] { flex: 0 0 50%; accent-color: var(--acento); }
+  .palanca { min-width: 62px; padding: 8px 12px; background: var(--panel2); border: 1px solid var(--linea); font-weight: 800; color: var(--tenue); }
+  .palanca.on { background: var(--acento); color: var(--acento-ink); border-color: var(--acento); }
+  .festeja { animation: festeja .5s ease-in-out infinite alternate; }
+  @keyframes festeja { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+  .px { display: block; }
+  .px.mini { width: 27px; height: 36px; }
+  .px.grande { width: 120px; height: 160px; margin: 0 auto; }
+  .pxm { display: block; }
+  .pxm.mini { width: 45px; height: 42px; }
+  .pxm.grande { width: 225px; height: 210px; margin: 0 auto; }
+  .reto .pxm.grande { width: 150px; height: 140px; margin-bottom: 6px; }
+  .chip { width: 100%; display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--linea); padding: 8px 12px; margin: 16px 0 4px; text-align: left; }
+  .chip > span:nth-child(2) { flex: 1; }
+  .chip small { display: block; margin: 0 !important; color: var(--tenue); font-size: 12px; }
+  .tabs { display: flex; gap: 6px; margin: 12px 0; }
+  .tabs button { flex: 1; background: var(--panel); border: 1px solid var(--linea); padding: 10px 2px; font-weight: 700; font-size: 13px; color: var(--tenue); }
+  .tabs button.on { background: var(--acento); color: var(--acento-ink); border-color: var(--acento); }
+  #perfil h4 { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tenue); margin: 16px 0 8px; }
+  .escenario { background: repeating-linear-gradient(0deg, var(--cesped) 0 20px, var(--cesped2) 20px 40px); border-radius: 14px; padding: 18px 0 12px; border: 2px solid rgba(255,255,255,.3); }
+  #pNombre, #pClub { width: 100%; margin-top: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--linea); background: var(--panel); color: var(--texto); font: inherit; font-size: 16px; }
+  .fila-op { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fila-op button { background: var(--panel); border: 1px solid var(--linea); padding: 9px 12px; font-size: 13px; font-weight: 600; }
+  .fila-op button.on { border-color: var(--acento); color: var(--acento); }
+  .fila-op button.cand { color: var(--tenue); }
+  .fila-op .muestra { width: 40px; height: 40px; padding: 0; border-width: 2px; }
+  .fila-op .muestra.on { border-color: var(--acento); box-shadow: 0 0 0 2px var(--acento); }
+  #pAviso { color: var(--alerta); font-size: 13px; min-height: 18px; margin: 0; }
+  .sobre { display: flex; gap: 12px; align-items: center; background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 12px; margin-bottom: 10px; }
+  .papel { flex: none; width: 74px; height: 100px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; font-family: ui-monospace, Menlo, monospace; font-size: 9px; letter-spacing: 1px; color: #10200a;
+    background: repeating-linear-gradient(135deg, #c8f04a 0 6px, #a9d12f 6px 12px); box-shadow: inset 0 0 0 3px #10200a, inset 0 0 0 6px #e6ff8a; }
+  .papel b { font-size: 12px; }
+  .s-elite .papel { color: #2a1a00; background: repeating-linear-gradient(135deg, #ffd23f 0 6px, #f0a81c 6px 12px); box-shadow: inset 0 0 0 3px #2a1a00, inset 0 0 0 6px #fff0a8; }
+  .sobre small { display: block; color: var(--tenue); font-size: 12px; margin: 2px 0 8px; }
+  .sobre .btn { padding: 10px 12px; font-size: 14px; }
+  .cartas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .carta { --r: #8a968f; position: relative; background: #0e1713; border: 3px solid var(--r); padding: 6px 5px 7px; text-align: center; font-family: ui-monospace, Menlo, monospace; min-width: 0; }
+  .carta .arte { background: var(--r); aspect-ratio: 30 / 28; display: flex; align-items: center; justify-content: center; margin-bottom: 5px; font-size: 30px; font-weight: 900; color: rgba(0,0,0,.35); }
+  .carta .arte .pxc { width: 100%; height: 100%; display: block; }
+  .carta .num { display: block; text-align: left; font-size: 8.5px; letter-spacing: .5px; color: var(--tenue); margin-bottom: 3px; }
+  .carta.r-media .arte { background: linear-gradient(#6fb8ff, #2f7fd6); }
+  .carta.r-leg .arte { background: linear-gradient(#ffe08a, #e09a1a); }
+  .carta.r-basica .arte, .carta .arte { background-image: linear-gradient(#a7b3ac, #74807a); }
+  .carta b { display: block; font-size: 11px; line-height: 1.15; overflow-wrap: anywhere; }
+  .carta small { display: block; font-size: 9px; color: var(--tenue); line-height: 1.35; }
+  .carta i { display: block; font-style: normal; font-size: 8.5px; letter-spacing: .5px; text-transform: uppercase; color: var(--r); margin-top: 3px; font-weight: 700; }
+  .carta em { display: block; font-style: normal; font-size: 9.5px; color: var(--acento); margin-top: 2px; }
+  .carta.r-media { --r: #4aa3ff; }
+  .carta.r-leg { --r: #ffc83d; }
+  .carta.r-ultra { --r: #ff5fd2; border-image: linear-gradient(135deg, #ff5fd2, #7c5cff, #3de0ff, #ffd23f) 1; }
+  .carta.r-ultra .arte { background: linear-gradient(135deg, #ff5fd2, #7c5cff, #3de0ff, #ffd23f); background-size: 300% 300%; animation: brillo 4s linear infinite; }
+  .carta.falta { opacity: .45; }
+  .carta.falta .arte { align-items: center; background: #1c3026; color: var(--r); }
+  .abre .carta { animation: sale .45s ease-out both; }
+  .abre .carta:nth-child(2) { animation-delay: .25s; }
+  .abre .carta:nth-child(3) { animation-delay: .5s; }
+  @keyframes sale { from { transform: translateY(18px) scale(.8); opacity: 0; } }
+  @keyframes brillo { from { background-position: 0% 50%; } to { background-position: 300% 50%; } }
+  @media (prefers-reduced-motion: reduce) { .abre .carta, .carta.r-ultra .arte { animation: none; } }
+  .premio { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-top: 1px solid var(--linea); font-variant-numeric: tabular-nums; }
+
+  /* Pantalla de carga */
+  .tapa { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center;
+    background: radial-gradient(circle at 50% 35%, #183326, #050a07 75%); overflow: hidden; }
+  .pelota { width: 36px; height: 36px; background: #f7f7f2; box-shadow: inset -6px -6px 0 #c9c9c2, inset 12px 12px 0 -6px #23272e, 0 0 0 4px #10161c; animation: bota .7s ease-in-out infinite alternate; }
+  @keyframes bota { from { transform: translateY(0) rotate(0); } to { transform: translateY(-26px) rotate(90deg); } }
+  .cTitulo { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--tenue); margin-top: 8px; }
+  .cTipo { display: inline-block; background: var(--acento); color: var(--acento-ink); font-weight: 800; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+  .cTexto { font-size: 20px; line-height: 1.35; font-weight: 700; max-width: 380px; margin: 4px 0; text-wrap: balance; }
+  .cFirma { color: var(--acento); font-size: 14px; font-weight: 700; }
+  .cBarra { width: 180px; height: 6px; background: var(--panel2); border-radius: 99px; overflow: hidden; margin-top: 10px; }
+  .cBarra div { height: 100%; background: var(--acento); animation: llena 3.6s linear both; }
+  @keyframes llena { from { width: 0; } to { width: 100%; } }
+
+  /* Apertura de sobres */
+  .mega { cursor: pointer; animation: tiembla .5s ease-in-out infinite; border-radius: 4px; }
+  .mega .papel { width: 170px; height: 232px; font-size: 15px; gap: 12px; animation: aura 1.6s steps(1) infinite; }
+  .mega .papel b { font-size: 24px; }
+  .mega.rompe { animation: rompe .65s ease-in forwards; }
+  @keyframes tiembla { 0%, 100% { transform: rotate(-2.5deg) translateY(0); } 25% { transform: rotate(2deg) translateY(-4px); } 50% { transform: rotate(-1.5deg) translateY(2px); } 75% { transform: rotate(3deg) translateY(-2px); } }
+  @keyframes aura { 0% { filter: drop-shadow(0 0 18px #8a968f); } 25% { filter: drop-shadow(0 0 26px #4aa3ff); } 50% { filter: drop-shadow(0 0 34px #ffc83d); } 75% { filter: drop-shadow(0 0 40px #ff5fd2); } }
+  @keyframes rompe { 30% { transform: scale(1.15) rotate(-4deg); filter: brightness(2); } 100% { transform: scale(2.4) rotate(6deg); opacity: 0; filter: brightness(6); } }
+  .mesa { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 430px; position: relative; z-index: 2; }
+  .puesto { position: relative; min-height: 190px; display: flex; }
+  .puesto > .carta, .puesto > .dorso { flex: 1; position: relative; z-index: 1; }
+  .dorso { border: 3px solid #2b4638; display: flex; align-items: center; justify-content: center; font: 900 44px ui-monospace, Menlo, monospace; color: rgba(255,255,255,.18);
+    background: repeating-linear-gradient(135deg, #14221b 0 8px, #1c3026 8px 16px); }
+  .dorso.duda { animation: duda .9s steps(1) infinite, late .3s ease-in-out infinite alternate; }
+  .dorso.duda.fuerte { animation: dudaFuerte .5s steps(1) infinite, late .15s ease-in-out infinite alternate; color: rgba(255,255,255,.6); }
+  @keyframes duda { 0% { border-color: #8a968f; box-shadow: 0 0 14px #8a968f; } 34% { border-color: #4aa3ff; box-shadow: 0 0 16px #4aa3ff; } 67% { border-color: #8a968f; box-shadow: 0 0 10px #8a968f; } }
+  @keyframes dudaFuerte { 0% { border-color: #ffc83d; box-shadow: 0 0 26px #ffc83d; } 25% { border-color: #ff5fd2; box-shadow: 0 0 30px #ff5fd2; } 50% { border-color: #3de0ff; box-shadow: 0 0 30px #3de0ff; } 75% { border-color: #7c5cff; box-shadow: 0 0 30px #7c5cff; } }
+  @keyframes late { from { transform: scale(1); } to { transform: scale(1.04); } }
+  .puesto.revela > .carta { animation: voltea .5s cubic-bezier(.2, 1.4, .4, 1) both; }
+  @keyframes voltea { from { transform: rotateY(90deg) scale(.6); filter: brightness(4); } to { transform: none; filter: none; } }
+  .puesto.epica > .carta { box-shadow: 0 0 26px var(--r), 0 0 60px var(--r); animation: voltea .5s cubic-bezier(.2, 1.4, .4, 1) both, pulso 1.2s ease-in-out .5s infinite alternate; }
+  @keyframes pulso { from { box-shadow: 0 0 18px var(--r), 0 0 40px var(--r); } to { box-shadow: 0 0 34px var(--r), 0 0 90px var(--r); } }
+  .rayos { position: absolute; left: 50%; top: 50%; width: 340%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; z-index: 0; opacity: .55; pointer-events: none;
+    background: repeating-conic-gradient(#ffc83d 0 9deg, transparent 9deg 18deg); -webkit-mask: radial-gradient(circle, #000 20%, transparent 68%); mask: radial-gradient(circle, #000 20%, transparent 68%); animation: gira 9s linear infinite; }
+  .rayos.r-ultra { background: conic-gradient(#ff5fd2, #7c5cff, #3de0ff, #c8f04a, #ffd23f, #ff5fd2); opacity: .8; animation-duration: 4s; }
+  @keyframes gira { to { rotate: 360deg; } }
+  .destello { position: absolute; inset: 0; z-index: 5; pointer-events: none; animation: flash .7s ease-out forwards; }
+  @keyframes flash { from { opacity: .95; } to { opacity: 0; } }
+  .sacude { animation: sacude .45s linear; }
+  @keyframes sacude { 20% { transform: translate(-7px, 4px); } 40% { transform: translate(6px, -5px); } 60% { transform: translate(-5px, -3px); } 80% { transform: translate(4px, 3px); } }
+  .confeti { position: absolute; top: -12px; width: 8px; height: 8px; z-index: 4; pointer-events: none; animation: cae linear forwards; }
+  @keyframes cae { to { transform: translateY(110vh) rotate(540deg); } }
+  #apTxt { font-size: 15px; font-weight: 700; min-height: 22px; margin: 0; position: relative; z-index: 2; }
+  #apertura .btn { max-width: 430px; position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .pelota, .mega, .mega .papel, .dorso.duda, .dorso.duda.fuerte, .rayos, .puesto.revela > .carta, .puesto.epica > .carta, .sacude { animation: none; }
+    .confeti, .destello { display: none; }
+  }
+  .quieto .pelota, .quieto .mega, .quieto .mega .papel, .quieto .dorso.duda, .quieto .dorso.duda.fuerte, .quieto .rayos, .quieto .festeja,
+  .quieto .puesto.revela > .carta, .quieto .puesto.epica > .carta, .quieto .sacude, .quieto .carta.r-ultra .arte { animation: none; }
+  .quieto .confeti, .quieto .destello { display: none; }
+
+  /* Reto, copa y explicacion */
+  .reto { background: var(--panel2); border: 1px solid var(--acento); border-radius: 14px; padding: 12px 14px; margin: 14px 0; text-align: center; font-size: 14px; line-height: 1.4; }
+  .reto b { color: var(--acento); }
+  .reto .btn { margin: 10px 0 0 !important; }
+  .copa { background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 12px 14px; margin: 14px 0; text-align: left; }
+  .copa h3 { margin: 0 0 2px; font-size: 16px; }
+  .copa .sub { font-size: 12px; margin-bottom: 8px; }
+  .cruce { display: grid; grid-template-columns: 74px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-top: 1px solid var(--linea); font-size: 13px; }
+  .cruce .fase { color: var(--tenue); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .cruce .quien small { display: block; color: var(--tenue); font-size: 10.5px; line-height: 1.25; }
+  .cruce .marc { font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+  .cruce.gano .marc { color: var(--acento); }
+  .cruce.perdio .marc { color: var(--alerta); }
+  .cruce.nojugo { opacity: .4; }
+  .anios { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .anios span { font-size: 11px; padding: 3px 6px; border-radius: 6px; background: var(--panel2); color: var(--tenue); font-variant-numeric: tabular-nums; }
+  .anios span.si { background: var(--acento); color: var(--acento-ink); font-weight: 800; }
+  #nombre { width: 100%; margin-top: 10px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--linea); background: var(--panel); color: var(--texto); font: inherit; font-size: 16px; }
+  details { text-align: left; background: var(--panel); border: 1px solid var(--linea); border-radius: 14px; padding: 10px 14px; margin-top: 14px; font-size: 13px; line-height: 1.5; }
+  details summary { cursor: pointer; font-weight: 700; }
+  details ul { padding-left: 18px; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <section id="inicio">
+    <h1>INVICTO <span>7</span></h1>
+    <p class="tenue">Arma un siete histórico de fut 7, con jugadores de 1980 a hoy, y descubre si gana los 38 partidos.</p>
+    <button class="chip" id="chip"></button>
+    <div class="reto hidden" id="retoInicio"></div>
+    <div class="modo" id="modo">
+      <button data-modo="clasico" class="on">Clásico</button>
+      <button data-modo="ciegas">A ciegas</button>
+    </div>
+    <small class="tenue" id="modoTxt"></small>
+    <h2>Elige una liga</h2>
+    <div class="ligas" id="ligas"></div>
+    <ol class="pasos">
+      <li>La ruleta te da un club y una década.</li>
+      <li>Eliges un jugador de esa plantilla para un puesto libre.</li>
+      <li>Siete rondas: portero, 2 defensas, 3 medios y 1 delantero.</li>
+      <li>Tienes un cambio de club y un cambio de década por partida.</li>
+      <li>En Champions y Libertadores, tu siete juega además una eliminatoria contra campeones reales.</li>
+    </ol>
+    <p class="nota tenue">Tu equipo vale por tres cosas: goles por partido, partidos con la selección y trayectoria en el club.</p>
+  </section>
+
+  <section id="partida" class="hidden">
+    <div class="top"><h1>INVICTO <span>7</span></h1><span class="tenue" id="ronda"></span></div>
+    <div class="cancha" id="cancha"></div>
+    <div class="ruleta" id="ruleta">
+      <div class="escudo" id="escudo"></div>
+      <div class="club" id="club">—</div>
+      <div class="dec" id="dec">—</div>
+      <div class="saltos">
+        <button id="saltaClub"></button>
+        <button id="saltaDec"></button>
+      </div>
+    </div>
+    <div class="lista" id="lista"></div>
+    <p class="nota tenue">PJ y goles: partidos de liga con ese club. Sel: partidos con su selección mayor. Fuente: Wikidata.</p>
+  </section>
+
+  <section id="final" class="hidden">
+    <div class="top"><h1>INVICTO <span>7</span></h1><span class="tenue" id="modoFinal"></span></div>
+    <div class="record" id="record"></div>
+    <div class="ged">GANADOS · EMPATADOS · PERDIDOS</div>
+    <div class="nivel" id="nivel"></div>
+    <div class="aviso hidden" id="aviso"></div>
+    <div class="barras" id="barras"></div>
+    <div class="reto hidden" id="retoFinal"></div>
+    <div class="copa hidden" id="copa"></div>
+    <div class="copa" id="premio"></div>
+    <div class="cancha" id="canchaFinal"></div>
+    <input id="nombre" maxlength="18" placeholder="Tu nombre o apodo (opcional)" autocomplete="off">
+    <button class="btn" id="compartir">Retar a un amigo</button>
+    <button class="btn sec" id="otra">Jugar otra vez</button>
+    <details>
+      <summary>¿Cómo se calcula el récord?</summary>
+      <ul>
+        <li>No se simulan 38 partidos: el récord sale de una fórmula sobre los datos reales de tus siete jugadores.</li>
+        <li><b>Ataque (40%)</b>: goles por partido de liga con ese club. El del delantero pesa triple, el de los medios doble, el de los defensas simple y el portero no cuenta.</li>
+        <li><b>Selección (35%)</b>: partidos con su selección mayor.</li>
+        <li><b>Trayectoria (25%)</b>: partidos de liga jugados con ese club.</li>
+        <li>Cada barra va de 0 a 100 contra el mejor siete posible de esa liga. La suma ponderada es tu fuerza.</li>
+        <li>La fuerza se convierte en victorias con una curva: un siete elegido al azar gana pocos partidos y para ganar los 38 hay que llegar al 90% del mejor siete posible. Cada victoria extra cuesta más que la anterior.</li>
+        <li>Si una barra queda por debajo de 35, el récord no pasa de 24 victorias; por debajo de 50, no pasa de 31.</li>
+        <li>De lo que no ganas, entre más fuerte el equipo, más empates y menos derrotas.</li>
+        <li>En la eliminatoria, el marcador se sortea según la diferencia de fuerza con el rival; el mismo siete obtiene siempre los mismos marcadores.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="perfil" class="hidden">
+    <div class="top"><h1>INVICTO <span>7</span></h1><span class="monedas" id="pMonedas"></span></div>
+    <button class="btn sec" id="pVolver">Volver a jugar</button>
+    <div class="tabs" id="pTabs">
+      <button data-tab="monito">Monito</button>
+      <button data-tab="sobres">Sobres</button>
+      <button data-tab="album">Álbum</button>
+      <button data-tab="ajustes">Ajustes</button>
+    </div>
+    <p id="pAviso"></p>
+    <div id="pCuerpo"></div>
+  </section>
+
+</div>
+<div class="tapa hidden" id="carga"></div>
+<div class="tapa hidden" id="apertura"></div>
+<script src="data.js"></script>
+<script src="campeones.js"></script>
+<script src="engine.js"></script>
+<script src="datos.js"></script>
+<script src="sonido.js"></script>
+<script src="arte.js"></script>
+<script src="perfil.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

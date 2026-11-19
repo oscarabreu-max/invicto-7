@@ -1,0 +1,825 @@
+{
+ "america": {
+  "si": [
+   "américa",
+   "america"
+  ],
+  "no": [
+   "coapa",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "chivas": {
+  "si": [
+   "guadalajara",
+   "chivas"
+  ],
+  "no": [
+   "universidad",
+   "u. de g",
+   "udeg",
+   "leones",
+   "tecos",
+   "uag",
+   "rayadas",
+   "tapatío",
+   "tapatio",
+   "coras",
+   "premier",
+   "usa",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "cruzazul": {
+  "si": [
+   "cruz azul"
+  ],
+  "no": [
+   "hidalgo",
+   "oaxaca",
+   "jasso",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "pumas": {
+  "si": [
+   "unam",
+   "pumas",
+   "universidad nacional"
+  ],
+  "no": [
+   "morelos",
+   "naucalpan",
+   "tabasco",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "toluca": {
+  "si": [
+   "toluca"
+  ],
+  "no": [
+   "mexiquense",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "tigres": {
+  "si": [
+   "tigres",
+   "uanl"
+  ],
+  "no": [
+   "premier",
+   "mochis",
+   "broncos",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "monterrey": {
+  "si": [
+   "monterrey"
+  ],
+  "no": [
+   "premier",
+   "raya2",
+   "flash",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "santos_mx": {
+  "si": [
+   "santos laguna"
+  ],
+  "no": [
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "pachuca": {
+  "si": [
+   "pachuca"
+  ],
+  "no": [
+   "juniors",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "leon": {
+  "si": [
+   "león",
+   "leon"
+  ],
+  "no": [
+   "leones",
+   "premier",
+   " b ",
+   "nuevo",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "atlas": {
+  "si": [
+   "atlas"
+  ],
+  "no": [
+   "académicos",
+   "academicos",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "necaxa": {
+  "si": [
+   "necaxa"
+  ],
+  "no": [
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "puebla": {
+  "si": [
+   "puebla"
+  ],
+  "no": [
+   "lobos",
+   "buap",
+   "premier",
+   "ángeles",
+   "angeles",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "morelia": {
+  "si": [
+   "morelia",
+   "monarcas"
+  ],
+  "no": [
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "atlante": {
+  "si": [
+   "atlante"
+  ],
+  "no": [
+   "premier",
+   "neza",
+   "potros",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "queretaro": {
+  "si": [
+   "querétaro",
+   "queretaro"
+  ],
+  "no": [
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "tijuana": {
+  "si": [
+   "tijuana"
+  ],
+  "no": [
+   "dorados",
+   "premier",
+   " b ",
+   "women",
+   "femenil",
+   "(w)"
+  ]
+ },
+ "boca": {
+  "si": [
+   "boca juniors"
+  ],
+  "no": [
+   "reserv",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "river": {
+  "si": [
+   "river plate"
+  ],
+  "no": [
+   "montevideo",
+   "uruguay",
+   "puerto rico",
+   "ecuador",
+   "asunción",
+   "asuncion",
+   "paraguay",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "independiente": {
+  "si": [
+   "independiente"
+  ],
+  "no": [
+   "medellín",
+   "medellin",
+   "santa fe",
+   "del valle",
+   "rivadavia",
+   "petrolero",
+   "terán",
+   "teran",
+   "campo grande",
+   "juniors",
+   "neuquén",
+   "neuquen",
+   "f.b.c",
+   "fbc",
+   "chivilcoy",
+   "unión",
+   "union",
+   "panamá",
+   "chorrera",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "estudiantes": {
+  "si": [
+   "estudiantes"
+  ],
+  "no": [
+   "mérida",
+   "merida",
+   "tecos",
+   "buenos aires",
+   "caseros",
+   "río cuarto",
+   "rio cuarto",
+   "san luis",
+   "altamira",
+   "medicina",
+   "unidos",
+   "(ba)",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "velez": {
+  "si": [
+   "vélez",
+   "velez"
+  ],
+  "no": [
+   "málaga",
+   "malaga",
+   "mostar",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "argentinos": {
+  "si": [
+   "argentinos juniors"
+  ],
+  "no": [
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "racing": {
+  "si": [
+   "racing"
+  ],
+  "no": [
+   "santander",
+   "montevideo",
+   "córdoba",
+   "cordoba",
+   "olavarría",
+   "olavarria",
+   "paris",
+   "strasbourg",
+   "ferrol",
+   "lens",
+   "genk",
+   "mechelen",
+   "trelew",
+   "louisville",
+   "portuense",
+   "rioja",
+   "matra",
+   "white",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "saopaulo": {
+  "si": [
+   "são paulo",
+   "sao paulo"
+  ],
+  "no": [
+   "(rs)",
+   "rio grande",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "flamengo": {
+  "si": [
+   "flamengo"
+  ],
+  "no": [
+   "piauí",
+   "piaui",
+   "guarulhos",
+   "(pi)",
+   "(sp)",
+   "arcoverde",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "palmeiras": {
+  "si": [
+   "palmeiras"
+  ],
+  "no": [
+   "nordeste",
+   "(ba)",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "santos_br": {
+  "si": [
+   "santos"
+  ],
+  "no": [
+   "laguna",
+   "(ap)",
+   "guápiles",
+   "guapiles",
+   "dos santos",
+   "santos de",
+   "macapá",
+   "macapa",
+   "cape town",
+   "tartu",
+   "engen",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "gremio": {
+  "si": [
+   "grêmio",
+   "gremio"
+  ],
+  "no": [
+   "barueri",
+   "prudente",
+   "anápolis",
+   "anapolis",
+   "maringá",
+   "maringa",
+   "osasco",
+   "novorizontino",
+   "catanduvense",
+   "brasil",
+   "esportivo",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "inter_br": {
+  "si": [
+   "internacional"
+  ],
+  "no": [
+   "limeira",
+   "santa maria",
+   "(sp)",
+   "lages",
+   "minas",
+   "madrid",
+   "palmira",
+   "bebedouro",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "corinthians": {
+  "si": [
+   "corinthians"
+  ],
+  "no": [
+   "alagoano",
+   "paranaense",
+   "(al)",
+   "(pr)",
+   "prudente",
+   "casuals",
+   "usa",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "cruzeiro": {
+  "si": [
+   "cruzeiro"
+  ],
+  "no": [
+   "(rs)",
+   "porto alegre",
+   "(pb)",
+   "(df)",
+   "arapiraca",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "atleticomg": {
+  "si": [
+   "atlético mineiro",
+   "atletico mineiro",
+   "atlético-mg",
+   "atletico-mg"
+  ],
+  "no": [
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "fluminense": {
+  "si": [
+   "fluminense"
+  ],
+  "no": [
+   "feira",
+   "(pi)",
+   "(ba)",
+   "joinville",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "penarol": {
+  "si": [
+   "peñarol",
+   "penarol"
+  ],
+  "no": [
+   "rivera",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "nacional_uy": {
+  "si": [
+   "nacional"
+  ],
+  "no": [
+   "atlético nacional",
+   "atletico nacional",
+   "el nacional",
+   "madeira",
+   "asunción",
+   "asuncion",
+   "paraguay",
+   "potosí",
+   "potosi",
+   "tijuana",
+   "(sp)",
+   "(am)",
+   "funchal",
+   "c.d. nacional",
+   "cd nacional",
+   "táchira",
+   "tachira",
+   "patos",
+   "guadalajara",
+   "manaus",
+   "são paulo",
+   "national",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "olimpia": {
+  "si": [
+   "olimpia"
+  ],
+  "no": [
+   "honduras",
+   "c.d. olimpia",
+   "cd olimpia",
+   "tegucigalpa",
+   "ljubljana",
+   "milano",
+   "bălți",
+   "itá",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "colocolo": {
+  "si": [
+   "colo-colo",
+   "colo colo"
+  ],
+  "no": [
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "atleticonacional": {
+  "si": [
+   "atlético nacional",
+   "atletico nacional"
+  ],
+  "no": [
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ },
+ "ldu": {
+  "si": [
+   "ldu",
+   "l.d.u.",
+   "liga de quito",
+   "liga deportiva universitaria"
+  ],
+  "no": [
+   "loja",
+   "portoviejo",
+   "cuenca",
+   "women",
+   "femenil",
+   "feminino",
+   "femenino",
+   "(w)",
+   " b ",
+   "premier",
+   "sub-",
+   "u-20",
+   "u20",
+   "youth"
+  ]
+ }
+}
