@@ -233,6 +233,7 @@
       copa: S.copa ? (S.copa.campeon ? 'campeon' : S.copa.llego) : 'sin copa', con_reto: S.reto ? 1 : 0 });
     $('nombre').value = Perfil.nombre();
     $('compartir').textContent = 'Retar a un amigo';
+    $('imagen').textContent = 'Compartir imagen';
     $('avisoBuzon').classList.add('hidden');
     mostrar('final');
   }
@@ -332,6 +333,21 @@
     Buzon.registrar(S.idReto, Perfil.nombre(), S.liga.id, marca(S.res));
     $('avisoBuzon').classList.remove('hidden');
     Analitica.evento('reto_compartido', { liga: S.liga.id, victorias: S.res.g });
+  });
+  // La imagen lleva el siete y el record; el texto que la acompana, el enlace del reto.
+  $('imagen').addEventListener('click', function () {
+    Perfil.ponNombre($('nombre').value);
+    var como = Imagen.compartir({
+      nombre: $('nombre').value.trim().slice(0, 18), liga: S.liga.n, modo: S.modo, marca: marca(S.res), nivel: S.res.nivel,
+      copa: S.copa ? (S.copa.campeon ? 'Campeón de la eliminatoria' : 'Eliminado en ' + S.copa.llego.toLowerCase()) + ' · ' + S.copa.titulos + ' de ' + S.copa.vitrina.length + ' ' + S.trofeo : '',
+      filas: FILAS.map(function (fila) {
+        return fila.map(function (i) { var p = S.lineup[i]; return { pos: SLOTS[i], nombre: p.name, de: p.club + ' ' + decada(p.dec).replace('Años ', ''), colores: p.colores }; });
+      })
+    }, textoCompartir());
+    Buzon.registrar(S.idReto, Perfil.nombre(), S.liga.id, marca(S.res));
+    $('avisoBuzon').classList.remove('hidden');
+    if (como === 'descarga') { $('imagen').textContent = 'Imagen guardada'; }
+    Analitica.evento('imagen_compartida', { liga: S.liga.id, victorias: S.res.g, como: como });
   });
   $('retoFinal').addEventListener('click', function (e) {
     if (e.target.id !== 'festejo') { return; }
