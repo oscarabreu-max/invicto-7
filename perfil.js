@@ -244,6 +244,7 @@ var Perfil = (function () {
     return '<h4>Sonido</h4>' + interruptor('musica', 'Música') + volumen('volM', 'Volumen de la música') +
       interruptor('fx', 'Efectos') + volumen('volF', 'Volumen de los efectos') +
       '<h4>Pantalla</h4>' + interruptor('vibra', 'Vibración en el teléfono') + interruptor('quieto', 'Reducir animaciones') +
+      '<h4>Privacidad</h4><div class="ajuste"><span>Estadísticas de uso (Google Analytics)</span><button data-ana="1" class="palanca' + (Analitica.activo() ? ' on' : '') + '">' + (Analitica.activo() ? 'Sí' : 'No') + '</button></div>' +
       '<h4>Progreso</h4><p class="nota tenue" style="margin-top:0">' + D.partidas + ' partidas jugadas · ' + Object.keys(D.cartas).length + ' cartas. Todo se guarda solo en este navegador.</p>' +
       '<button class="btn sec" id="pBorrar">' + (porBorrar ? 'Toca otra vez para borrar todo' : 'Borrar mi progreso') + '</button>' +
       '<p class="nota tenue">¿No suena? Sube el volumen de multimedia del teléfono y, en iPhone, quita el modo silencio. Estado del audio: ' + ({ running: 'sonando', suspended: 'en pausa', interrupted: 'interrumpido' }[Sonido.estado()] || 'sin iniciar') + '.</p>' +
@@ -358,6 +359,7 @@ var Perfil = (function () {
     if (!tengo(k)) {
       if (D.monedas < p) { aviso = 'Te faltan ' + (p - D.monedas) + ' monedas.'; Sonido.fx('error'); return; }
       D.monedas -= p; D.items[k] = 1; Sonido.fx('moneda');
+      Analitica.evento('articulo_comprado', { articulo: k.split('~')[0].indexOf('jersey:') === 0 && k.indexOf('~') > 0 ? 'jersey:club~' + k.split('~')[1] : k, precio: p });
     }
     if (campo === 'festejo') { D.festejo = k.slice(8); } else { D.av[campo] = k.slice(campo.length + 1); }
     guardar();
@@ -383,7 +385,14 @@ var Perfil = (function () {
       try { localStorage.removeItem(CLAVE); } catch (err) { /* sin almacenamiento */ }
       location.reload();
     }
-    else if (b.dataset.sobre) { recien = abrir(b.dataset.sobre); pintar(); if (recien) { apertura(b.dataset.sobre, recien); } }
+    else if (b.dataset.sobre) {
+      recien = abrir(b.dataset.sobre); pintar();
+      if (recien) {
+        Analitica.evento('sobre_abierto', { sobre: b.dataset.sobre, mejor: RAREZAS[Math.min.apply(null, recien.map(function (x) { return x.c.r; }))].id });
+        apertura(b.dataset.sobre, recien);
+      }
+    }
+    else if (b.dataset.ana) { Analitica.decidir(!Analitica.activo()); pintar(); }
   });
   $('pCuerpo').addEventListener('input', function (e) {
     var k = e.target.dataset && e.target.dataset.vol;

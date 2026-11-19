@@ -1,7 +1,7 @@
 // Deja el juego disponible sin conexion. Con red siempre pide la version nueva
 // y la guarda; sin red responde con la ultima guardada.
-var CACHE = 'invicto7-v3';
-var ARCHIVOS = ['./', 'index.html', 'data.js', 'campeones.js', 'engine.js', 'datos.js', 'sonido.js', 'arte.js', 'perfil.js', 'ui.js',
+var CACHE = 'invicto7-v4';
+var ARCHIVOS = ['./', 'index.html', 'data.js', 'campeones.js', 'engine.js', 'analitica.js', 'datos.js', 'sonido.js', 'arte.js', 'perfil.js', 'ui.js',
   'manifest.webmanifest', 'iconos/icono-192.png', 'iconos/icono-512.png'];
 
 self.addEventListener('install', function (e) {

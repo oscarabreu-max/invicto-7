@@ -92,6 +92,7 @@
     G = motor(liga);
     var rt = retoPendiente && retoPendiente.liga === liga && retoPendiente.modo === modo ? retoPendiente : null;
     S = { liga: liga, modo: modo, reto: rt, lineup: [], usados: {}, vistos: {}, saltos: { club: 1, dec: 1 }, combo: null, girando: false };
+    Analitica.evento('partida_inicio', { liga: liga.id, modo: modo, con_reto: rt ? 1 : 0 });
     Carga.mostrar(liga.n + ' · calentando', function () {
       mostrar('partida');
       girar(null);
@@ -225,6 +226,8 @@
     if (S.reto && (r.g - S.reto.res.g || r.fuerza - S.reto.res.fuerza) > 0) { pr.push(['Le ganaste a ' + S.reto.nombre, 75, 1]); }
     $('premio').innerHTML = Perfil.premiar(pr);
     Sonido.fx('final'); Sonido.vibra(120);
+    Analitica.evento('partida_fin', { liga: S.liga.id, modo: S.modo, victorias: r.g, nivel: r.nivel,
+      copa: S.copa ? (S.copa.campeon ? 'campeon' : S.copa.llego) : 'sin copa', con_reto: S.reto ? 1 : 0 });
     $('nombre').value = Perfil.nombre();
     $('compartir').textContent = 'Retar a un amigo';
     mostrar('final');
@@ -318,10 +321,12 @@
   $('compartir').addEventListener('click', function () {
     Perfil.ponNombre($('nombre').value);
     enviar(textoCompartir(), $('compartir'));
+    Analitica.evento('reto_compartido', { liga: S.liga.id, victorias: S.res.g });
   });
   $('retoFinal').addEventListener('click', function (e) {
     if (e.target.id !== 'festejo') { return; }
     var yo = Perfil.nombre() || 'Tu rival';
+    Analitica.evento('festejo_enviado', { liga: S.liga.id });
     enviar('INVICTO 7 · ' + yo + ' te ganó el reto: ' + marca(S.res) + ' contra tu ' + marca(S.reto.res) + '\n' +
       location.href.split('#')[0] + '#f=' + [encodeURIComponent(Perfil.nombre()), marca(S.res), marca(S.reto.res), Perfil.codigoFestejo()].join('~'), e.target);
   });

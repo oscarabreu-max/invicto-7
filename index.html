@@ -165,6 +165,12 @@
   @media (prefers-reduced-motion: reduce) { .abre .carta, .carta.r-ultra .arte { animation: none; } }
   .premio { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-top: 1px solid var(--linea); font-variant-numeric: tabular-nums; }
 
+  /* Aviso de estadisticas */
+  #avisoAna { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--panel2); border-top: 1px solid var(--linea); padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-size: 13px; line-height: 1.35; }
+  #avisoAna span { flex: 1 1 240px; max-width: 420px; }
+  #avisoAna button { padding: 9px 14px; font-weight: 800; font-size: 13px; background: var(--panel); border: 1px solid var(--linea); }
+  #avisoAna button[data-ok="si"] { background: var(--acento); color: var(--acento-ink); border-color: var(--acento); }
+
   /* Pantalla de carga */
   .tapa { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center;
     background: radial-gradient(circle at 50% 35%, #183326, #050a07 75%); overflow: hidden; }
@@ -329,11 +335,13 @@
   </section>
 
 </div>
+<div class="hidden" id="avisoAna"><span>Usamos Google Analytics para saber cuánta gente juega y qué ligas prefieren. No se guarda tu nombre ni nada que te identifique.</span><button data-ok="no">No, gracias</button><button data-ok="si">Aceptar</button></div>
 <div class="tapa hidden" id="carga"></div>
 <div class="tapa hidden" id="apertura"></div>
 <script src="data.js"></script>
 <script src="campeones.js"></script>
 <script src="engine.js"></script>
+<script src="analitica.js"></script>
 <script src="datos.js"></script>
 <script src="sonido.js"></script>
 <script src="arte.js"></script>
@@ -357,9 +365,9 @@
   });
   caja.addEventListener('click', function (e) {
     if (e.target.id !== 'btnInstalar' || !oferta) { return; }
-    oferta.prompt(); oferta = null; caja.classList.add('hidden');
+    oferta.prompt(); oferta = null; caja.classList.add('hidden'); Analitica.evento('instalar_toque');
   });
-  window.addEventListener('appinstalled', function () { caja.classList.add('hidden'); });
+  window.addEventListener('appinstalled', function () { caja.classList.add('hidden'); Analitica.evento('instalada'); });
   // iPhone y iPad no avisan: hay que hacerlo desde el menu de compartir de Safari.
   if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
     caja.innerHTML = 'Para instalarlo en tu iPhone: toca <b>Compartir</b> en Safari y luego <b>Agregar a inicio</b>.';
