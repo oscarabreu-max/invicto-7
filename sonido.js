@@ -14,7 +14,8 @@ var Sonido = (function () {
       gM.connect(ctx.destination); gF.connect(ctx.destination);
       niveles();
     }
-    if (ctx.state === 'suspended') { ctx.resume(); }
+    // En iPhone el estado tambien puede ser 'interrupted' (llamada, cambio de app).
+    if (ctx.state !== 'running') { ctx.resume(); }
     return true;
   }
   function niveles() {
@@ -78,6 +79,8 @@ var Sonido = (function () {
   // arpegio, entra la bateria, y al final se suma una voz aguda.
   function programar() {
     equipo();
+    if (ctx.state !== 'running') { return; }
+    if (cuando < ctx.currentTime) { cuando = ctx.currentTime + 0.05; }
     while (cuando < ctx.currentTime + 0.3) {
       var compas = Math.floor(paso / 16), i = paso % 16, bloque = Math.floor(compas / 4) % 4, A = ACORDES[compas % 4];
       // El filtro respira cada ocho compases.
@@ -124,9 +127,24 @@ var Sonido = (function () {
   }
   function vibra(ms) { if (cfg.vibra && navigator.vibrate) { try { navigator.vibrate(ms); } catch (err) { /* sin vibracion */ } } }
 
-  // Los navegadores solo dejan sonar despues de un toque del usuario.
-  function despertar() { if (listo()) { musica(); } }
-  document.addEventListener('pointerdown', despertar);
+  // Los navegadores solo dejan sonar despues de un toque del usuario, y en el
+  // telefono el toque cuenta al levantar el dedo (touchend o click), no al
+  // apoyarlo. Por eso se escucha en varios eventos y se repite en cada toque.
+  var abierto = false;
+  function despertar() {
+    // iPhone: sin esto, el interruptor de silencio tambien calla el juego.
+    try { if (navigator.audioSession) { navigator.audioSession.type = 'playback'; } } catch (err) { /* navegador sin esa opcion */ }
+    if (!listo()) { return; }
+    if (!abierto) {
+      // Un sonido vacio dentro del toque termina de desbloquear el audio en iOS.
+      var b = ctx.createBufferSource(); b.buffer = ctx.createBuffer(1, 1, 22050); b.connect(ctx.destination); b.start(0);
+      abierto = ctx.state === 'running';
+    }
+    // Si el audio estuvo detenido, el reloj de la musica quedo atras: se reinicia.
+    if (reloj && cuando < ctx.currentTime) { cuando = ctx.currentTime + 0.05; }
+    musica();
+  }
+  ['touchend', 'click', 'keydown'].forEach(function (ev) { document.addEventListener(ev, despertar, true); });
   document.addEventListener('visibilitychange', musica);
   document.addEventListener('click', function (e) {
     if (e.target.closest && e.target.closest('button')) { fx('clic'); }
@@ -134,6 +152,7 @@ var Sonido = (function () {
 
   return {
     fx: fx, vibra: vibra,
+    estado: function () { return ctx ? ctx.state : 'sin iniciar'; },
     config: function (c) { Object.keys(cfg).forEach(function (k) { if (k in c) { cfg[k] = c[k]; } }); niveles(); musica(); }
   };
 })();

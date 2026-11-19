@@ -246,6 +246,7 @@ var Perfil = (function () {
       '<h4>Pantalla</h4>' + interruptor('vibra', 'Vibración en el teléfono') + interruptor('quieto', 'Reducir animaciones') +
       '<h4>Progreso</h4><p class="nota tenue" style="margin-top:0">' + D.partidas + ' partidas jugadas · ' + Object.keys(D.cartas).length + ' cartas. Todo se guarda solo en este navegador.</p>' +
       '<button class="btn sec" id="pBorrar">' + (porBorrar ? 'Toca otra vez para borrar todo' : 'Borrar mi progreso') + '</button>' +
+      '<p class="nota tenue">¿No suena? Sube el volumen de multimedia del teléfono y, en iPhone, quita el modo silencio. Estado del audio: ' + ({ running: 'sonando', suspended: 'en pausa', interrupted: 'interrumpido' }[Sonido.estado()] || 'sin iniciar') + '.</p>' +
       '<p class="nota tenue">Datos de jugadores: Wikidata y Wikipedia. Música y efectos generados por el juego.</p>';
   }
 
