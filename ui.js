@@ -232,6 +232,7 @@
     Analitica.evento('partida_fin', { liga: S.liga.id, modo: S.modo, victorias: r.g, nivel: r.nivel,
       copa: S.copa ? (S.copa.campeon ? 'campeon' : S.copa.llego) : 'sin copa', con_reto: S.reto ? 1 : 0 });
     $('nombre').value = Perfil.nombre();
+    $('llamado').innerHTML = '¿Quién de tus amigos supera tu <b>' + marca(r) + '</b>?';
     $('compartir').textContent = 'Retar a un amigo';
     $('imagen').textContent = 'Compartir imagen';
     $('avisoBuzon').classList.add('hidden');

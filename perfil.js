@@ -150,10 +150,12 @@ var Perfil = (function () {
       '<small>PJ ' + c.m + (c.pos === 'POR' ? '' : ' · G ' + c.g) + ' · Sel ' + c.caps + '</small><i>' + R.n + '</i>' + (extra || '') + '</div>';
   }
 
-  function abrir(tipo) {
+  function abrir(tipo, gratis) {
     var S = SOBRES[tipo], todas = cartas(), out = [];
-    if (!alcanza(S)) { return null; }
-    D.monedas -= S.precio; D.trofeos -= S.trofeos;
+    if (!gratis) {
+      if (!alcanza(S)) { return null; }
+      D.monedas -= S.precio; D.trofeos -= S.trofeos;
+    }
     for (var i = 0; i < 3; i++) {
       var t = Math.random(), r = 0, acc = 0;
       for (r = 0; r < 4; r++) { acc += S.prob[r]; if (t < acc) { break; } }
@@ -400,8 +402,15 @@ var Perfil = (function () {
   $('pCabeza').addEventListener('keydown', function (e) { if (e.target.id === 'pNombre' && e.key === 'Enter') { guardarNombre(); e.target.blur(); } });
   // Desde la pantalla de resultado: ir directo a gastar lo ganado.
   $('premio').addEventListener('click', function (e) {
-    var b = e.target.closest('button[data-perfil]');
+    var b = e.target.closest('button[data-perfil]'), r = e.target.closest('button[data-regalo]');
     if (b) { abrirPerfil(b.dataset.perfil); }
+    if (r && D.regalo === 1) {
+      D.regalo = 2;
+      recien = abrir('basico', true);
+      $('regalo').innerHTML = '<b>Sobre abierto</b>Tus cartas ya están en el álbum.<button class="btn sec" data-perfil="album">Ver mi álbum</button>';
+      Analitica.evento('sobre_abierto', { sobre: 'regalo', mejor: RAREZAS[Math.min.apply(null, recien.map(function (x) { return x.c.r; }))].id });
+      apertura('basico', recien);
+    }
   });
   $('pVolver').addEventListener('click', function () { chip(); ver('inicio'); });
   $('pTabs').addEventListener('click', function (e) {
@@ -444,8 +453,12 @@ var Perfil = (function () {
   function premiar(lista) {
     var total = lista.reduce(function (s, x) { return s + x[1]; }, 0), tro = lista.reduce(function (s, x) { return s + (x[2] || 0); }, 0);
     D.monedas += total; D.trofeos += tro; D.partidas++;
+    // Un sobre gratis, una sola vez: que todos vean una apertura pronto. Casi
+    // nadie juntaba para el primero antes de irse. regalo: 1 pendiente, 2 abierto.
+    if (!D.regalo) { D.regalo = 1; }
     guardar();
-    return '<h3>Ganaste <span class="monedas"><i></i>' + total + '</span>' + (tro ? ' y <span class="trofeos"><i></i>' + tro + '</span>' : '') + '</h3>' + lista.map(function (x) {
+    return (D.regalo === 1 ? '<div class="regalo" id="regalo"><b>Tienes un sobre de regalo</b>Tres cartas para empezar tu álbum.' +
+      '<button class="btn" data-regalo="1">Abrir mi sobre</button></div>' : '') + '<h3>Ganaste <span class="monedas"><i></i>' + total + '</span>' + (tro ? ' y <span class="trofeos"><i></i>' + tro + '</span>' : '') + '</h3>' + lista.map(function (x) {
       return '<div class="premio"><span>' + esc(x[0]) + '</span><span>' + (x[1] ? '+' + x[1] : '') + (x[2] ? ' <span class="trofeos"><i></i>' + x[2] + '</span>' : '') + '</span></div>';
     }).join('') + '<div class="sub tenue" style="margin-top:8px">Tienes ' + D.monedas + ' monedas y ' + D.trofeos + ' trofeos. Canjéalos por sobres de cartas o por artículos para tu monito.</div>' +
       '<div class="dos"><button class="btn sec" data-perfil="monito">Vestir a mi monito</button><button class="btn" data-perfil="sobres">Abrir sobres</button></div>';

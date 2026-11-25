@@ -146,6 +146,14 @@
   .como b { color: var(--texto); }
   .meta { font-size: 13px; margin: 10px 0; color: var(--acento); }
   .meta b { color: var(--texto); }
+  .llamado { background: var(--panel); border: 1px solid var(--acento); border-radius: 14px; padding: 14px; margin: 14px 0; }
+  .llamado h3 { margin: 0 0 10px; font-size: 17px; text-align: center; line-height: 1.25; }
+  .llamado h3 b { color: var(--acento); }
+  .llamado input { margin-top: 0 !important; }
+  .llamado .btn { margin: 8px 0 0 !important; }
+  .regalo { background: linear-gradient(135deg, #2a3a12, var(--panel2)); border: 1px solid var(--acento); border-radius: 12px; padding: 12px; margin: 0 0 12px; text-align: center; font-size: 14px; }
+  .regalo b { color: var(--acento); display: block; font-size: 16px; margin-bottom: 4px; }
+  .regalo .btn { margin: 10px 0 0 !important; }
   .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .dos .btn { margin: 0 !important; padding: 11px 6px; font-size: 14px; }
   .tabs { display: flex; gap: 6px; margin: 12px 0; }
@@ -338,13 +346,16 @@
     <div class="aviso hidden" id="aviso"></div>
     <div class="barras" id="barras"></div>
     <div class="reto hidden" id="retoFinal"></div>
+    <div class="llamado">
+      <h3 id="llamado"></h3>
+      <input id="nombre" maxlength="18" placeholder="Tu nombre o apodo (opcional)" autocomplete="off">
+      <button class="btn" id="compartir">Retar a un amigo</button>
+      <button class="btn sec" id="imagen">Compartir imagen</button>
+      <p class="tenue hidden" id="avisoBuzon" style="font-size:12px;text-align:center;margin:8px 0 0">Cuando tu amigo juegue el reto, verás su resultado en tu buzón, en la pantalla de inicio.</p>
+    </div>
     <div class="copa hidden" id="copa"></div>
     <div class="copa" id="premio"></div>
     <div class="cancha" id="canchaFinal"></div>
-    <input id="nombre" maxlength="18" placeholder="Tu nombre o apodo (opcional)" autocomplete="off">
-    <button class="btn" id="compartir">Retar a un amigo</button>
-    <button class="btn sec" id="imagen">Compartir imagen</button>
-    <p class="tenue hidden" id="avisoBuzon" style="font-size:12px;text-align:center;margin:8px 0 0">Cuando tu amigo juegue el reto, verás su resultado en tu buzón, en la pantalla de inicio.</p>
     <button class="btn sec" id="otra">Jugar otra vez</button>
     <details>
       <summary>¿Cómo se calcula el récord?</summary>
